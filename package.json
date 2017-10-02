@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "lint": "flow",
+    "test": "jest --watch"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "flow-bin": "^0.56.0",
+    "flow-typed": "^2.1.5",
+    "jest": "^21.2.1"
+  },
+  "dependencies": {
+    "glob": "^7.1.2",
+    "micromatch": "^3.1.0",
+    "react": "^16.0.0"
+  }
+}
