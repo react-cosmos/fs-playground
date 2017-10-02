@@ -10,7 +10,8 @@ const findByComponentType = (components, type) =>
   components.find(c => c.type === type);
 
 const components = getComponents([
-  '**/?(*.)fixture?(s).js'
+  '**/__fixture?(s)__/**/*.{js,jsx}',
+  '**/?(*.)fixture?(s).{js,jsx}'
 ]);
 
 test('finds fixtures for Italics component', () => {
@@ -25,7 +26,7 @@ test('finds fixtures for Italics component', () => {
 
   expect(fixtures).toContainEqual({
     name: 'default',
-    filePath: res('../components/dupe.fixture'),
+    filePath: res('../components/dupe.fixture.jsx'),
     source: {
       component: Italics,
       props: {
@@ -88,6 +89,30 @@ test('finds fixtures for Bold component', () => {
       name: 'The mouse',
       props: {
         name: 'Jerry'
+      }
+    }
+  });
+
+  expect(fixtures).toContainEqual({
+    name: 'Abracadabra part I',
+    filePath: res('../components/__fixtures__/abra'),
+    source: {
+      component: Bold,
+      name: 'Abracadabra part I',
+      props: {
+        name: 'Abra'
+      }
+    }
+  });
+
+  expect(fixtures).toContainEqual({
+    name: 'Abracadabra part II',
+    filePath: res('../components/__fixtures__/cadabra.jsx'),
+    source: {
+      component: Bold,
+      name: 'Abracadabra part II',
+      props: {
+        name: 'Cadabra'
       }
     }
   });
