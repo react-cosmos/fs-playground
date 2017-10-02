@@ -2,6 +2,7 @@
 
 import { getComponents } from './fs';
 import Italics from '../components/Italics';
+import Bold from '../components/Bold';
 
 const res = p => require.resolve(p);
 
@@ -9,17 +10,16 @@ const findByComponentType = (components, type) =>
   components.find(c => c.type === type);
 
 const components = getComponents([
-  '**/?(dupe.)fixture.js'
+  '**/?(*.)fixture.js'
 ]);
 
-test('finds fixtures', () => {
+test('finds fixtures for Italics component', () => {
   const component = findByComponentType(components, Italics);
   if (!component) {
     throw new Error('Component `Italics` not found in results');
   }
 
   const { name, type, fixtures } = component;
-
   expect(name).toEqual('Italics');
   expect(type).toEqual(Italics);
 
@@ -41,6 +41,29 @@ test('finds fixtures', () => {
       component: Italics,
       props: {
         name: 'John'
+      }
+    }
+  });
+});
+
+test('finds fixtures for Bold component', () => {
+  const component = findByComponentType(components, Bold);
+  if (!component) {
+    throw new Error('Component `Bold` not found in results');
+  }
+
+  const { name, type, fixtures } = component;
+  expect(name).toEqual('Bold');
+  expect(type).toEqual(Bold);
+
+  expect(fixtures).toContainEqual({
+    name: 'Foo fixture',
+    filePath: res('../components/bold.fixture'),
+    source: {
+      component: Bold,
+      name: 'Foo fixture',
+      props: {
+        name: 'Foo Bar'
       }
     }
   });
