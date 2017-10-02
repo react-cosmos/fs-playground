@@ -1,5 +1,7 @@
 // @flow
 
+import prettyFormat from 'pretty-format';
+
 import { getComponents } from './fs';
 import Italics from '../components/Italics';
 import Bold from '../components/Bold';
@@ -13,6 +15,8 @@ const components = getComponents([
   '**/__fixture?(s)__/**/*.{js,jsx}',
   '**/?(*.)fixture?(s).{js,jsx}'
 ]);
+
+// console.log(prettyFormat(components));
 
 test('finds fixtures for Italics component', () => {
   const component = findByComponentType(components, Italics);
