@@ -10,7 +10,7 @@ const findByComponentType = (components, type) =>
   components.find(c => c.type === type);
 
 const components = getComponents([
-  '**/?(*.)fixture.js'
+  '**/?(*.)fixture?(s).js'
 ]);
 
 test('finds fixtures for Italics component', () => {
@@ -64,6 +64,30 @@ test('finds fixtures for Bold component', () => {
       name: 'Foo fixture',
       props: {
         name: 'Foo Bar'
+      }
+    }
+  });
+
+  expect(fixtures).toContainEqual({
+    name: 'The cat',
+    filePath: res('../components/fixtures'),
+    source: {
+      component: Bold,
+      name: 'The cat',
+      props: {
+        name: 'Tom'
+      }
+    }
+  });
+
+  expect(fixtures).toContainEqual({
+    name: 'The mouse',
+    filePath: res('../components/fixtures'),
+    source: {
+      component: Bold,
+      name: 'The mouse',
+      props: {
+        name: 'Jerry'
       }
     }
   });
