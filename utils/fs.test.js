@@ -9,25 +9,39 @@ const findByComponentType = (components, type) =>
   components.find(c => c.type === type);
 
 const components = getComponents([
-  '**/fixture.js'
+  '**/?(dupe.)fixture.js'
 ]);
 
-test('reads **/fixture.js', () => {
+test('finds fixtures', () => {
   const component = findByComponentType(components, Italics);
-  expect(component).toEqual({
-    name: 'Italics',
-    type: Italics,
-    fixtures: [
-      {
-        name: 'default',
-        filePath: res('../components/fixture'),
-        source: {
-          component: Italics,
-          props: {
-            name: 'John'
-          }
-        }
+  if (!component) {
+    throw new Error('Component `Italics` not found in results');
+  }
+
+  const { name, type, fixtures } = component;
+
+  expect(name).toEqual('Italics');
+  expect(type).toEqual(Italics);
+
+  expect(fixtures).toContainEqual({
+    name: 'default',
+    filePath: res('../components/dupe.fixture'),
+    source: {
+      component: Italics,
+      props: {
+        name: 'Johnny'
       }
-    ]
+    }
+  });
+
+  expect(fixtures).toContainEqual({
+    name: 'default (1)',
+    filePath: res('../components/fixture'),
+    source: {
+      component: Italics,
+      props: {
+        name: 'John'
+      }
+    }
   });
 });

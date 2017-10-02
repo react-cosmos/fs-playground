@@ -2,6 +2,7 @@
 
 import glob from 'glob';
 import micromatch from 'micromatch';
+import { sortBy } from 'lodash';
 
 import type { ComponentType } from 'react';
 import type { Components, FixturesByComponent } from './types';
@@ -16,6 +17,7 @@ export function getComponents(fileMatch: Array<string>): Components {
 
   // Group all fixtures by component
   const fixtures: FixturesByComponent = new Map();
+  const unnamedByComponent: Map<ComponentType<*>, number> = new Map();
   fixturePaths.forEach(fixturePath => {
     const source = require(fixturePath).default;
     const { component } = source;
@@ -24,12 +26,19 @@ export function getComponents(fileMatch: Array<string>): Components {
     if (!compFixtures) {
       compFixtures = [];
       fixtures.set(component, compFixtures);
+      unnamedByComponent.set(component, 0);
+    }
+
+    const unnamed = unnamedByComponent.get(component);
+    let name = source.name;
+    if (!name) {
+      name = unnamed ? `default (${unnamed})` : 'default';
+      unnamedByComponent.set(component, unnamed + 1);
     }
 
     compFixtures.push({
       filePath: fixturePath,
-      // name: fixture.name || 'default'
-      name: 'default',
+      name,
       source
     });
   });
@@ -42,7 +51,7 @@ export function getComponents(fileMatch: Array<string>): Components {
     components.push({
       name: inferComponentName(componentType),
       type: componentType,
-      fixtures: compFixtures || []
+      fixtures: compFixtures ? sortBy(compFixtures, f => f.name) : []
     });
   }
 
