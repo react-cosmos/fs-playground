@@ -2,6 +2,7 @@
 
 import glob from 'glob';
 import micromatch from 'micromatch';
+import promisify from 'util.promisify';
 import { sortBy } from 'lodash';
 import { importModule } from './importModule';
 import { inferComponentName } from './inferComponentName';
@@ -9,10 +10,31 @@ import { inferComponentName } from './inferComponentName';
 import type { ComponentType } from 'react';
 import type { Components, FixturesByComponent } from './types';
 
-export async function getComponents(
-  fileMatch: Array<string>
-): Promise<Components> {
-  const allPaths = glob.sync('!(node_modules)/**/*', { absolute: true });
+const globAsync = promisify(glob);
+
+type args = ?{
+  fileMatch?: Array<string>,
+  cwd?: string
+};
+
+const defaultFileMatch = [
+  '**/__fixture?(s)__/**/*.{js,jsx}',
+  '**/?(*.)fixture?(s).{js,jsx}'
+];
+
+const defaults = {
+  fileMatch: defaultFileMatch,
+  cwd: process.cwd()
+};
+
+export async function getComponents(args: args): Promise<Components> {
+  const { fileMatch, cwd } = { ...defaults, ...args };
+
+  const allPaths = await globAsync('**/*', {
+    cwd,
+    absolute: true,
+    ignore: '**/node_modules/**'
+  });
   const fixturePaths = micromatch(allPaths, fileMatch);
 
   // Group all fixtures by component
