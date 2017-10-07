@@ -11,12 +11,16 @@ const res = p => require.resolve(p);
 const findByComponentType = (components, type) =>
   components.find(c => c.type === type);
 
-const components = getComponents([
-  '**/__fixture?(s)__/**/*.{js,jsx}',
-  '**/?(*.)fixture?(s).{js,jsx}'
-]);
+let components;
 
-// console.log(prettyFormat(components));
+beforeEach(async () => {
+  components = await getComponents([
+    '**/__fixture?(s)__/**/*.{js,jsx}',
+    '**/?(*.)fixture?(s).{js,jsx}'
+  ]);
+
+  // console.log(prettyFormat(components));
+});
 
 test('finds fixtures for Italics component', () => {
   const component = findByComponentType(components, Italics);

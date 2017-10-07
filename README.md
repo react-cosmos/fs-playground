@@ -16,7 +16,7 @@ Array [
   Object {
     "fixtures": Array [
       Object {
-        "filePath": "/Users/skidding/Work/@react-cosmos/fs-playground/components/__fixtures__/abra.js",
+        "filePath": "/path/to/components/__fixtures__/abra.js",
         "name": "Abracadabra part I",
         "source": Object {
           "component": [Function Bold],
@@ -27,7 +27,7 @@ Array [
         },
       },
       Object {
-        "filePath": "/Users/skidding/Work/@react-cosmos/fs-playground/components/__fixtures__/cadabra.jsx",
+        "filePath": "/path/to/components/__fixtures__/cadabra.jsx",
         "name": "Abracadabra part II",
         "source": Object {
           "component": [Function Bold],
@@ -38,7 +38,7 @@ Array [
         },
       },
       Object {
-        "filePath": "/Users/skidding/Work/@react-cosmos/fs-playground/components/bold.fixture.js",
+        "filePath": "/path/to/components/bold.fixture.js",
         "name": "Foo fixture",
         "source": Object {
           "component": [Function Bold],
@@ -49,7 +49,7 @@ Array [
         },
       },
       Object {
-        "filePath": "/Users/skidding/Work/@react-cosmos/fs-playground/components/fixtures.js",
+        "filePath": "/path/to/components/fixtures.js",
         "name": "The cat",
         "source": Object {
           "component": [Function Bold],
@@ -60,7 +60,7 @@ Array [
         },
       },
       Object {
-        "filePath": "/Users/skidding/Work/@react-cosmos/fs-playground/components/fixtures.js",
+        "filePath": "/path/to/components/fixtures.js",
         "name": "The mouse",
         "source": Object {
           "component": [Function Bold],
@@ -77,7 +77,7 @@ Array [
   Object {
     "fixtures": Array [
       Object {
-        "filePath": "/Users/skidding/Work/@react-cosmos/fs-playground/components/dupe.fixture.jsx",
+        "filePath": "/path/to/components/dupe.fixture.jsx",
         "name": "default",
         "source": Object {
           "component": [Function Italics],
@@ -87,7 +87,7 @@ Array [
         },
       },
       Object {
-        "filePath": "/Users/skidding/Work/@react-cosmos/fs-playground/components/fixture.js",
+        "filePath": "/path/to/components/fixture.js",
         "name": "default (1)",
         "source": Object {
           "component": [Function Italics],

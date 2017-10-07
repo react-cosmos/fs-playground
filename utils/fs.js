@@ -3,17 +3,15 @@
 import glob from 'glob';
 import micromatch from 'micromatch';
 import { sortBy } from 'lodash';
+import { importModule } from './importModule';
+import { inferComponentName } from './inferComponentName';
 
 import type { ComponentType } from 'react';
 import type { Components, FixturesByComponent } from './types';
 
-function inferComponentName(componentType: ComponentType<*>): string {
-  // TODO: Are there cases when .name is missing?
-  return componentType.name;
-}
-
-// TODO: Make async
-export function getComponents(fileMatch: Array<string>): Components {
+export async function getComponents(
+  fileMatch: Array<string>
+): Promise<Components> {
   const allPaths = glob.sync('!(node_modules)/**/*', { absolute: true });
   const fixturePaths = micromatch(allPaths, fileMatch);
 
@@ -21,8 +19,7 @@ export function getComponents(fileMatch: Array<string>): Components {
   const fixtures: FixturesByComponent = new Map();
   const unnamedByComponent: Map<ComponentType<*>, number> = new Map();
   fixturePaths.forEach(fixturePath => {
-    // TODO: Normalize CJS/ES module
-    const source = require(fixturePath).default;
+    const source = importModule(require(fixturePath));
 
     // Fixture files can export one fixture object or a list of fixture object
     const fixturesInFile = Array.isArray(source) ? source : [source];
