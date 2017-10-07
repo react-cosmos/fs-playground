@@ -1,8 +1,8 @@
 {
   "scripts": {
     "lint": "flow",
-    "test": "jest --config jest.config.js --watch",
-    "test:watch": "jest --config jest.config.js"
+    "test": "jest --config jest.config.js",
+    "test:watch": "jest --config jest.config.js --watch"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
