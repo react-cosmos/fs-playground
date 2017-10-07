@@ -59,32 +59,42 @@ describe('Multi unnamed', () => {
     });
   });
 
-  describe('Bold fixture', () => {
+  describe('Bold fixtures', () => {
     let fixtures;
 
     beforeEach(() => {
       fixtures = components[1].fixtures;
     });
 
-    it('is one', () => {
-      expect(fixtures).toHaveLength(1);
+    it('are two', () => {
+      expect(fixtures).toHaveLength(2);
     });
 
-    it('has default name', () => {
+    it('have default names', () => {
       expect(fixtures[0].name).toBe('default');
+      expect(fixtures[1].name).toBe('default (1)');
     });
 
-    it('has multi file path', () => {
+    it('have multi file paths', () => {
       expect(fixtures[0].filePath).toBe(
+        require.resolve('./fileMocks/multiUnnamed/fixtures')
+      );
+      expect(fixtures[1].filePath).toBe(
         require.resolve('./fileMocks/multiUnnamed/fixtures')
       );
     });
 
-    it('has source', () => {
+    it('have sources', () => {
       expect(fixtures[0].source).toEqual({
         component: Bold,
         props: {
           name: 'Sarah'
+        }
+      });
+      expect(fixtures[1].source).toEqual({
+        component: Bold,
+        props: {
+          name: 'Alina'
         }
       });
     });

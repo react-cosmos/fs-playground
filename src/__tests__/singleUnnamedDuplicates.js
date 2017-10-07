@@ -29,12 +29,12 @@ describe('Single unnamed duplicates', () => {
     expect(components[0].fixtures).toHaveLength(2);
   });
 
-  it('has default fixture names', () => {
+  it('have default fixture names', () => {
     expect(components[0].fixtures[0].name).toBe('default');
     expect(components[0].fixtures[1].name).toBe('default (1)');
   });
 
-  it('has fixture paths', () => {
+  it('have fixture paths', () => {
     // Warning: Order is not controlled and subject to change
     expect(components[0].fixtures[0].filePath).toBe(
       require.resolve('./fileMocks/singleUnnamedDuplicates/clone.fixture')
@@ -44,7 +44,7 @@ describe('Single unnamed duplicates', () => {
     );
   });
 
-  it('has fixture sources', () => {
+  it('have fixture sources', () => {
     // Warning: Order is not controlled and subject to change
     expect(components[0].fixtures[0].source).toEqual({
       component: Italics,

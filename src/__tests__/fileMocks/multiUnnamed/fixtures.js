@@ -13,5 +13,11 @@ export default [
     props: {
       name: 'Sarah'
     }
+  },
+  {
+    component: Bold,
+    props: {
+      name: 'Alina'
+    }
   }
 ];
