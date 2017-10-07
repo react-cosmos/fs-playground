@@ -4,8 +4,8 @@ import glob from 'glob';
 import micromatch from 'micromatch';
 import promisify from 'util.promisify';
 import { sortBy } from 'lodash';
-import { importModule } from './importModule';
-import { inferComponentName } from './inferComponentName';
+import { importModule } from './utils/importModule';
+import { inferComponentName } from './utils/inferComponentName';
 
 import type { ComponentType } from 'react';
 import type { Components, FixturesByComponent } from './types';

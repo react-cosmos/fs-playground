@@ -1,7 +1,7 @@
 // @flow
 
 import path from 'path';
-import { getComponents } from '../fs';
+import { getComponents } from '../getComponents';
 import Italics from './fileMocks/components/Italics';
 import Bold from './fileMocks/components/Bold';
 
