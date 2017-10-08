@@ -6,6 +6,7 @@ import promisify from 'util.promisify';
 import { sortBy } from 'lodash';
 import { importModule } from './utils/importModule';
 import { inferComponentName } from './utils/inferComponentName';
+import { inferComponentPath } from './utils/inferComponentPath';
 import { createDefaultNamer } from './utils/defaultNamer';
 
 import type { ComponentType } from 'react';
@@ -39,23 +40,29 @@ export async function getComponents(args: args): Promise<Components> {
   const fixturePaths = micromatch(allPaths, fileMatch);
 
   // Group all fixtures by component
-  const fixtures: FixturesByComponent = new Map();
+  const fixturesByComponent: FixturesByComponent = new Map();
+  const componentPaths: Map<ComponentType<*>, string> = new Map();
   const defaultFixtureNamer = createDefaultNamer('default');
 
-  fixturePaths.forEach(fixturePath => {
+  // Can't use forEach because we want each (async) loop to be serial
+  for (let i = 0; i < fixturePaths.length; i++) {
+    const fixturePath = fixturePaths[i];
     const source = importModule(require(fixturePath));
 
     // Fixture files can export one fixture object or a list of fixture object
-    const fixturesInFile = Array.isArray(source) ? source : [source];
+    const isMultiFixture = Array.isArray(source);
+    const fixturesInFile = isMultiFixture ? source : [source];
 
-    fixturesInFile.forEach(fixture => {
+    // Can't use forEach because we want each (async) loop to be serial
+    for (let j = 0; j < fixturesInFile.length; j++) {
+      const fixture = fixturesInFile[j];
       const { component, name } = fixture;
 
       // Is this the first fixture for this component?
-      let compFixtures = fixtures.get(component);
+      let compFixtures = fixturesByComponent.get(component);
       if (!compFixtures) {
         compFixtures = [];
-        fixtures.set(component, compFixtures);
+        fixturesByComponent.set(component, compFixtures);
       }
 
       compFixtures.push({
@@ -63,19 +70,31 @@ export async function getComponents(args: args): Promise<Components> {
         name: name || defaultFixtureNamer(component),
         source: fixture
       });
-    });
-  });
+
+      if (!componentPaths.get(component)) {
+        const componentPath = await inferComponentPath({
+          fixturePath,
+          fixtureIndex: isMultiFixture ? j : null
+        });
+
+        if (componentPath) {
+          componentPaths.set(component, componentPath);
+        }
+      }
+    }
+  }
 
   // Add component meta data around fixtures
   const components: Components = [];
   const defaultComponentNamer = createDefaultNamer('Component');
 
-  for (let componentType of fixtures.keys()) {
-    const compFixtures = fixtures.get(componentType);
+  for (let componentType of fixturesByComponent.keys()) {
+    const compFixtures = fixturesByComponent.get(componentType);
     const name = inferComponentName(componentType) || defaultComponentNamer();
 
     components.push({
       name,
+      filePath: componentPaths.get(componentType) || null,
       type: componentType,
       fixtures: compFixtures ? sortBy(compFixtures, f => f.name) : []
     });
