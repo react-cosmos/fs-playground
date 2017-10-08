@@ -4,12 +4,12 @@ import path from 'path';
 import { getComponents } from '../getComponents';
 import Italics from './fileMocks/components/Italics';
 
-describe('Single unnamed duplicates', () => {
+describe('Singles unnamed', () => {
   let components;
 
   beforeEach(async () => {
     components = await getComponents({
-      cwd: path.join(__dirname, 'fileMocks/singleUnnamedDuplicates')
+      cwd: path.join(__dirname, 'fileMocks/singlesUnnamed')
     });
   });
 
@@ -29,10 +29,10 @@ describe('Single unnamed duplicates', () => {
   it('have fixture paths', () => {
     // Warning: Order is not controlled and subject to change
     expect(components[0].fixtures[0].filePath).toBe(
-      require.resolve('./fileMocks/singleUnnamedDuplicates/clone.fixture')
+      require.resolve('./fileMocks/singlesUnnamed/clone.fixture')
     );
     expect(components[0].fixtures[1].filePath).toBe(
-      require.resolve('./fileMocks/singleUnnamedDuplicates/fixture')
+      require.resolve('./fileMocks/singlesUnnamed/fixture')
     );
   });
 
