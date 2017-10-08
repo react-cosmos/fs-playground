@@ -18,43 +18,11 @@ describe('Multi named', () => {
     expect(components).toHaveLength(2);
   });
 
-  describe('Italics fixture', () => {
-    let fixtures;
-
-    beforeEach(() => {
-      fixtures = components[0].fixtures;
-    });
-
-    it('is one', () => {
-      expect(fixtures).toHaveLength(1);
-    });
-
-    it('has default name', () => {
-      expect(fixtures[0].name).toBe('J fix');
-    });
-
-    it('has multi file path', () => {
-      expect(fixtures[0].filePath).toBe(
-        require.resolve('./fileMocks/multiNamed/fixtures')
-      );
-    });
-
-    it('has source', () => {
-      expect(fixtures[0].source).toEqual({
-        name: 'J fix',
-        component: Italics,
-        props: {
-          name: 'John'
-        }
-      });
-    });
-  });
-
   describe('Bold fixtures', () => {
     let fixtures;
 
     beforeEach(() => {
-      fixtures = components[1].fixtures;
+      fixtures = components[0].fixtures;
     });
 
     it('are two', () => {
@@ -90,6 +58,38 @@ describe('Multi named', () => {
         component: Bold,
         props: {
           name: 'Sarah'
+        }
+      });
+    });
+  });
+
+  describe('Italics fixture', () => {
+    let fixtures;
+
+    beforeEach(() => {
+      fixtures = components[1].fixtures;
+    });
+
+    it('is one', () => {
+      expect(fixtures).toHaveLength(1);
+    });
+
+    it('has default name', () => {
+      expect(fixtures[0].name).toBe('J fix');
+    });
+
+    it('has multi file path', () => {
+      expect(fixtures[0].filePath).toBe(
+        require.resolve('./fileMocks/multiNamed/fixtures')
+      );
+    });
+
+    it('has source', () => {
+      expect(fixtures[0].source).toEqual({
+        name: 'J fix',
+        component: Italics,
+        props: {
+          name: 'John'
         }
       });
     });

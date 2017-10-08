@@ -81,5 +81,5 @@ export async function getComponents(args: args): Promise<Components> {
     });
   }
 
-  return components;
+  return sortBy(components, c => c.name);
 }
