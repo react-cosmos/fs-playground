@@ -6,6 +6,7 @@ import promisify from 'util.promisify';
 import { sortBy } from 'lodash';
 import { importModule } from './utils/importModule';
 import { inferComponentName } from './utils/inferComponentName';
+import { createDefaultNamer } from './utils/defaultNamer';
 
 import type { ComponentType } from 'react';
 import type { Components, FixturesByComponent } from './types';
@@ -39,12 +40,14 @@ export async function getComponents(args: args): Promise<Components> {
 
   // Group all fixtures by component
   const fixtures: FixturesByComponent = new Map();
-  const unnamedByComponent: Map<ComponentType<*>, number> = new Map();
+  const defaultFixtureNamer = createDefaultNamer('default');
+
   fixturePaths.forEach(fixturePath => {
     const source = importModule(require(fixturePath));
 
     // Fixture files can export one fixture object or a list of fixture object
     const fixturesInFile = Array.isArray(source) ? source : [source];
+
     fixturesInFile.forEach(fixture => {
       const { component, name } = fixture;
 
@@ -53,20 +56,11 @@ export async function getComponents(args: args): Promise<Components> {
       if (!compFixtures) {
         compFixtures = [];
         fixtures.set(component, compFixtures);
-        unnamedByComponent.set(component, 0);
-      }
-
-      // Unnamed fixtures will be named: default, default (1), default (2)...
-      const unnamed = unnamedByComponent.get(component);
-      let inferredName = name;
-      if (!inferredName) {
-        inferredName = unnamed ? `default (${unnamed})` : 'default';
-        unnamedByComponent.set(component, unnamed + 1);
       }
 
       compFixtures.push({
         filePath: fixturePath,
-        name: inferredName,
+        name: name || defaultFixtureNamer(component),
         source: fixture
       });
     });
@@ -74,11 +68,14 @@ export async function getComponents(args: args): Promise<Components> {
 
   // Add component meta data around fixtures
   const components: Components = [];
+  const defaultComponentNamer = createDefaultNamer('Component');
+
   for (let componentType of fixtures.keys()) {
     const compFixtures = fixtures.get(componentType);
+    const name = inferComponentName(componentType) || defaultComponentNamer();
 
     components.push({
-      name: inferComponentName(componentType),
+      name,
       type: componentType,
       fixtures: compFixtures ? sortBy(compFixtures, f => f.name) : []
     });

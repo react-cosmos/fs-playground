@@ -5,4 +5,3 @@ export default class Bold extends Component {
     return <strong>{this.props.name}</strong>;
   }
 }
-
