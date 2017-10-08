@@ -27,7 +27,7 @@ describe('Singles unnamed', () => {
   });
 
   it('have fixture paths', () => {
-    // Warning: Order is not controlled and subject to change
+    // Warning: Order depends on node-glob
     expect(components[0].fixtures[0].filePath).toBe(
       require.resolve('./fileMocks/singlesUnnamed/clone.fixture')
     );
@@ -37,7 +37,7 @@ describe('Singles unnamed', () => {
   });
 
   it('have fixture sources', () => {
-    // Warning: Order is not controlled and subject to change
+    // Warning: Order depends on node-glob
     expect(components[0].fixtures[0].source).toEqual({
       component: Italics,
       props: {
