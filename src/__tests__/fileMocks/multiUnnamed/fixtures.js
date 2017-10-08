@@ -3,9 +3,9 @@ import Bold from '../components/Bold';
 
 export default [
   {
-    component: Italics,
+    component: Bold,
     props: {
-      name: 'John'
+      name: 'Alina'
     }
   },
   {
@@ -15,9 +15,9 @@ export default [
     }
   },
   {
-    component: Bold,
+    component: Italics,
     props: {
-      name: 'Alina'
+      name: 'John'
     }
   }
 ];

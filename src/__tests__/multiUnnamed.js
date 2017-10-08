@@ -47,13 +47,13 @@ describe('Multi unnamed', () => {
       expect(fixtures[0].source).toEqual({
         component: Bold,
         props: {
-          name: 'Sarah'
+          name: 'Alina'
         }
       });
       expect(fixtures[1].source).toEqual({
         component: Bold,
         props: {
-          name: 'Alina'
+          name: 'Sarah'
         }
       });
     });
