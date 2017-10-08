@@ -9,6 +9,7 @@
     "babel-jest": "^21.2.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
+    "create-react-class": "^15.6.2",
     "flow-bin": "^0.56.0",
     "flow-typed": "^2.1.5",
     "jest": "^21.2.1",
