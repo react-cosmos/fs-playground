@@ -17,14 +17,6 @@ describe('Single named', () => {
     expect(components).toHaveLength(1);
   });
 
-  it('infers component name', () => {
-    expect(components[0].name).toBe('Italics');
-  });
-
-  it('references component type', () => {
-    expect(components[0].type).toBe(Italics);
-  });
-
   it('finds one fixture', () => {
     expect(components[0].fixtures).toHaveLength(1);
   });

@@ -17,14 +17,6 @@ describe('Single unnamed duplicates', () => {
     expect(components).toHaveLength(1);
   });
 
-  it('infers component name', () => {
-    expect(components[0].name).toBe('Italics');
-  });
-
-  it('references component type', () => {
-    expect(components[0].type).toBe(Italics);
-  });
-
   it('finds two fixtures', () => {
     expect(components[0].fixtures).toHaveLength(2);
   });

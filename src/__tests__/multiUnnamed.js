@@ -18,16 +18,6 @@ describe('Multi unnamed', () => {
     expect(components).toHaveLength(2);
   });
 
-  it('infers component names', () => {
-    expect(components[0].name).toBe('Italics');
-    expect(components[1].name).toBe('Bold');
-  });
-
-  it('references component types', () => {
-    expect(components[0].type).toBe(Italics);
-    expect(components[1].type).toBe(Bold);
-  });
-
   describe('Italics fixture', () => {
     let fixtures;
 
