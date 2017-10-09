@@ -2,7 +2,7 @@
 
 import path from 'path';
 import { getComponents } from '../getComponents';
-import Strike from './fileMocks/components/Strike';
+import Strike from './fileMocks/createClassNamed/Strike';
 
 describe('createReactClass named component', () => {
   let components;

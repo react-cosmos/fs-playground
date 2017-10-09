@@ -1,3 +1,5 @@
+// @flow
+
 const UnnamedClass = require('./components/UnnamedClass').default;
 
 module.exports = {

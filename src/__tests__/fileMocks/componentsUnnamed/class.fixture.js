@@ -1,4 +1,6 @@
-import UnnamedClass from '../components/UnnamedClass';
+// @flow
+
+import UnnamedClass from './components/UnnamedClass';
 
 export default {
   name: 'class fixture',

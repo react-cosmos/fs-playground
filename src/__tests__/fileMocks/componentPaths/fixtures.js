@@ -1,5 +1,8 @@
-import Italics from '../components/Italics';
-import Bold from '../components/Bold';
+// @flow
+
+import React from 'react';
+import Italics from './Italics';
+import Bold from './Bold';
 
 const InlineComponent = () => <span />;
 

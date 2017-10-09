@@ -2,7 +2,7 @@
 
 import path from 'path';
 import { getComponents } from '../getComponents';
-import Italics from './fileMocks/components/Italics';
+import Italics from './fileMocks/singleUnnamed/Italics';
 
 describe('Single unnamed', () => {
   let components;

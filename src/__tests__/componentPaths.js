@@ -14,10 +14,10 @@ describe('Component paths', () => {
 
   it('detects path for components with own file', () => {
     expect(components[0].filePath).toBe(
-      require.resolve('./fileMocks/components/Bold')
+      require.resolve('./fileMocks/componentPaths/Bold')
     );
     expect(components[2].filePath).toBe(
-      require.resolve('./fileMocks/components/Italics')
+      require.resolve('./fileMocks/componentPaths/Italics')
     );
   });
 

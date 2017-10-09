@@ -2,8 +2,8 @@
 
 import path from 'path';
 import { getComponents } from '../getComponents';
-import UnnamedClass from './fileMocks/components/UnnamedClass';
-import UnnamedFunction from './fileMocks/components/UnnamedFunction';
+import UnnamedClass from './fileMocks/componentsUnnamed/components/UnnamedClass';
+import UnnamedFunction from './fileMocks/componentsUnnamed/components/UnnamedFunction';
 
 describe('Components unnamed', () => {
   let components;

@@ -2,7 +2,7 @@
 
 import path from 'path';
 import { getComponents } from '../getComponents';
-import Bold from './fileMocks/components/Bold';
+import Bold from './fileMocks/esClassNamed/Bold';
 
 describe('ES class named', () => {
   let components;

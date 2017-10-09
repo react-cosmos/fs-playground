@@ -2,7 +2,7 @@
 
 import path from 'path';
 import { getComponents } from '../getComponents';
-import Italics from './fileMocks/components/Italics';
+import Italics from './fileMocks/funcComponentNamed/Italics';
 
 describe('Functional named component', () => {
   let components;

@@ -1,4 +1,6 @@
-import Strike from '../components/Strike';
+// @flow
+
+import Strike from './Strike';
 
 export default {
   component: Strike,

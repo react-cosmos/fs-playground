@@ -1,4 +1,6 @@
-import Italics from '../components/Italics';
+// @flow
+
+import Italics from './Italics';
 
 export default {
   component: Italics,

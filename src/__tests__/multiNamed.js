@@ -2,8 +2,8 @@
 
 import path from 'path';
 import { getComponents } from '../getComponents';
-import Italics from './fileMocks/components/Italics';
-import Bold from './fileMocks/components/Bold';
+import Italics from './fileMocks/multiNamed/Italics';
+import Bold from './fileMocks/multiNamed/Bold';
 
 describe('Multi named', () => {
   let components;
