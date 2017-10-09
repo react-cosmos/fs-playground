@@ -6,7 +6,7 @@ import promisify from 'util.promisify';
 import { sortBy } from 'lodash';
 import { importModule } from './utils/importModule';
 import { inferComponentName } from './utils/inferComponentName';
-import { inferComponentPath } from './utils/inferComponentPath';
+import { getComponentInfoFromFixture } from './utils/getComponentInfoFromFixture';
 import { createDefaultNamer } from './utils/defaultNamer';
 
 import type { ComponentType } from 'react';
@@ -14,7 +14,7 @@ import type { Components, FixturesByComponent } from './types';
 
 const globAsync = promisify(glob);
 
-type args = ?{
+type Args = ?{
   fileMatch?: Array<string>,
   cwd?: string
 };
@@ -29,9 +29,10 @@ const defaults = {
   cwd: process.cwd()
 };
 
-export async function getComponents(args: args): Promise<Components> {
+export async function getComponents(args: Args): Promise<Components> {
   const { fileMatch, cwd } = { ...defaults, ...args };
 
+  // TODO: How do we watch for file changes?
   const allPaths = await globAsync('**/*', {
     cwd,
     absolute: true,
@@ -41,6 +42,7 @@ export async function getComponents(args: args): Promise<Components> {
 
   // Group all fixtures by component
   const fixturesByComponent: FixturesByComponent = new Map();
+  const componentNames: Map<ComponentType<*>, string> = new Map();
   const componentPaths: Map<ComponentType<*>, string> = new Map();
   const defaultFixtureNamer = createDefaultNamer('default');
 
@@ -72,11 +74,18 @@ export async function getComponents(args: args): Promise<Components> {
       });
 
       if (!componentPaths.get(component)) {
-        const componentPath = await inferComponentPath({
+        const {
+          componentName,
+          componentPath
+        } = await getComponentInfoFromFixture({
           fixturePath,
           fixtureIndex: isMultiFixture ? j : null
         });
 
+        // It's possible to identify the component name but not the file path
+        if (componentName) {
+          componentNames.set(component, componentName);
+        }
         if (componentPath) {
           componentPaths.set(component, componentPath);
         }
@@ -90,11 +99,20 @@ export async function getComponents(args: args): Promise<Components> {
 
   for (let componentType of fixturesByComponent.keys()) {
     const compFixtures = fixturesByComponent.get(componentType);
-    const name = inferComponentName(componentType) || defaultComponentNamer();
+    const filePath = componentPaths.get(componentType) || null;
+    const name =
+      // Try to read the Class/function name at run-time. User can override
+      // this for custom naming
+      inferComponentName(componentType) ||
+      // Use the name that was used to reference the component in one of its
+      // fixtures
+      componentNames.get(componentType) ||
+      // Fallback to "Component", "Component (1)", "Component (2)", etc.
+      defaultComponentNamer();
 
     components.push({
       name,
-      filePath: componentPaths.get(componentType) || null,
+      filePath,
       type: componentType,
       fixtures: compFixtures ? sortBy(compFixtures, f => f.name) : []
     });

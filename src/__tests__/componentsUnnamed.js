@@ -14,17 +14,20 @@ describe('Components unnamed', () => {
     });
   });
 
-  it('finds both component', () => {
-    expect(components).toHaveLength(2);
+  it('finds all component', () => {
+    expect(components).toHaveLength(4);
   });
 
   it('has default component names', () => {
     expect(components[0].name).toBe('Component');
     expect(components[1].name).toBe('Component (1)');
+    expect(components[2].name).toBe('UnnamedClass');
+    expect(components[3].name).toBe('UnnamedFunction');
   });
 
   it('references component types', () => {
-    expect(components[0].type).toBe(UnnamedClass);
-    expect(components[1].type).toBe(UnnamedFunction);
+    // Component 1 & 2 are declared annonymously
+    expect(components[2].type).toBe(UnnamedClass);
+    expect(components[3].type).toBe(UnnamedFunction);
   });
 });
