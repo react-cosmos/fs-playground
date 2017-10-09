@@ -14,7 +14,7 @@ function getFixtureByName(fixtures, fixtureName) {
   return fixture;
 }
 
-describe('Fixture namespace', () => {
+describe('Fixture custom namespace', () => {
   let components;
   let fixtures;
 
@@ -25,17 +25,17 @@ describe('Fixture namespace', () => {
     fixtures = components[0].fixtures;
   });
 
-  it('sets "" namespace', () => {
+  it('has "" namespace', () => {
     const foo = getFixtureByName(fixtures, 'foo');
     expect(foo.namespace).toBe('');
   });
 
-  it('sets "Header" namespace', () => {
+  it('has "Header" namespace', () => {
     const bar = getFixtureByName(fixtures, 'bar');
     expect(bar.namespace).toBe('nested');
   });
 
-  it('sets "Header/User" namespace', () => {
+  it('has "Header/User" namespace', () => {
     const baz = getFixtureByName(fixtures, 'baz');
     expect(baz.namespace).toBe('nested/again');
   });

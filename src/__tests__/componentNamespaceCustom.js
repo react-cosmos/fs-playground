@@ -14,12 +14,12 @@ function getComponentByName(components, compName) {
   return comp;
 }
 
-describe('Component namespace', () => {
+describe('Component custom namespace', () => {
   let components;
 
   beforeEach(async () => {
     components = await getComponents({
-      cwd: path.join(__dirname, 'fileMocks/componentNamespace')
+      cwd: path.join(__dirname, 'fileMocks/componentNamespaceCustom')
     });
   });
 

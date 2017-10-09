@@ -121,7 +121,10 @@ export async function getComponents(args: Args): Promise<Components> {
       componentNames.get(componentType) ||
       // Fallback to "Component", "Component (1)", "Component (2)", etc.
       defaultComponentNamer();
-    const namespace = getFileNamespace(componentCommonDir, filePath);
+    const namespace =
+      typeof componentType.namespace === 'string'
+        ? componentType.namespace
+        : getFileNamespace(componentCommonDir, filePath);
 
     components.push({
       filePath,
