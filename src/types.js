@@ -14,6 +14,7 @@ export type FixturesByComponent = Map<ComponentType<*>, Fixtures>;
 
 export type Component = {
   name: string,
+  namespace: string,
   filePath: string | null,
   type: ComponentType<*>,
   fixtures: Fixtures

@@ -1,8 +1,10 @@
 // @flow
 
+import path from 'path';
 import glob from 'glob';
 import micromatch from 'micromatch';
 import promisify from 'util.promisify';
+import commondir from 'commondir';
 import { sortBy } from 'lodash';
 import { importModule } from './utils/importModule';
 import { inferComponentName } from './utils/inferComponentName';
@@ -96,6 +98,7 @@ export async function getComponents(args: Args): Promise<Components> {
   // Add component meta data around fixtures
   const components: Components = [];
   const defaultComponentNamer = createDefaultNamer('Component');
+  const componentCommonDir = getCommonDirFromPaths(componentPaths);
 
   for (let componentType of fixturesByComponent.keys()) {
     const compFixtures = fixturesByComponent.get(componentType);
@@ -109,9 +112,11 @@ export async function getComponents(args: Args): Promise<Components> {
       componentNames.get(componentType) ||
       // Fallback to "Component", "Component (1)", "Component (2)", etc.
       defaultComponentNamer();
+    const namespace = getFileNamespace(componentCommonDir, filePath);
 
     components.push({
       name,
+      namespace,
       filePath,
       type: componentType,
       fixtures: compFixtures ? sortBy(compFixtures, f => f.name) : []
@@ -119,4 +124,13 @@ export async function getComponents(args: Args): Promise<Components> {
   }
 
   return sortBy(components, c => c.name);
+}
+
+function getCommonDirFromPaths(paths: Map<*, string>) {
+  // Common dir isn't going to be used if we don't know of any component path
+  return paths.size > 0 ? commondir(Array.from(paths.values())) : '';
+}
+
+function getFileNamespace(commonDir, filePath) {
+  return filePath ? path.dirname(filePath).slice(commonDir.length + 1) : '';
 }
