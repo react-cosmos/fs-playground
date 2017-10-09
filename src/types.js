@@ -4,6 +4,7 @@ import type { ComponentType } from 'react';
 
 export type Fixture = {
   name: string,
+  namespace: string,
   filePath: string,
   source: Object
 };

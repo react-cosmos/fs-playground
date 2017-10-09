@@ -3,7 +3,7 @@
 import path from 'path';
 import { getComponents } from '../getComponents';
 
-// Checking the order of components if irrelevant in this these,
+// Checking the order of components if irrelevant in this these tests,
 // so we target component by name instead
 function getComponentByName(components, compName) {
   const comp = components.find(c => c.name === compName);

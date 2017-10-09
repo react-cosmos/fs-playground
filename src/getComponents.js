@@ -41,17 +41,19 @@ export async function getComponents(args: Args): Promise<Components> {
     ignore: '**/node_modules/**'
   });
   const fixturePaths = micromatch(allPaths, fileMatch);
+  const fixtureCommonDir = getCommonDirFromPaths(fixturePaths);
+  const defaultFixtureNamer = createDefaultNamer('default');
 
   // Group all fixtures by component
   const fixturesByComponent: FixturesByComponent = new Map();
   const componentNames: Map<ComponentType<*>, string> = new Map();
   const componentPaths: Map<ComponentType<*>, string> = new Map();
-  const defaultFixtureNamer = createDefaultNamer('default');
 
   // Can't use forEach because we want each (async) loop to be serial
   for (let i = 0; i < fixturePaths.length; i++) {
     const fixturePath = fixturePaths[i];
     const source = importModule(require(fixturePath));
+    const namespace = getFileNamespace(fixtureCommonDir, fixturePath);
 
     // Fixture files can export one fixture object or a list of fixture object
     const isMultiFixture = Array.isArray(source);
@@ -72,6 +74,7 @@ export async function getComponents(args: Args): Promise<Components> {
       compFixtures.push({
         filePath: fixturePath,
         name: name || defaultFixtureNamer(component),
+        namespace,
         source: fixture
       });
 
@@ -97,8 +100,10 @@ export async function getComponents(args: Args): Promise<Components> {
 
   // Add component meta data around fixtures
   const components: Components = [];
+  const componentCommonDir = getCommonDirFromPaths(
+    Array.from(componentPaths.values())
+  );
   const defaultComponentNamer = createDefaultNamer('Component');
-  const componentCommonDir = getCommonDirFromPaths(componentPaths);
 
   for (let componentType of fixturesByComponent.keys()) {
     const compFixtures = fixturesByComponent.get(componentType);
@@ -115,9 +120,9 @@ export async function getComponents(args: Args): Promise<Components> {
     const namespace = getFileNamespace(componentCommonDir, filePath);
 
     components.push({
+      filePath,
       name,
       namespace,
-      filePath,
       type: componentType,
       fixtures: compFixtures ? sortBy(compFixtures, f => f.name) : []
     });
@@ -126,9 +131,9 @@ export async function getComponents(args: Args): Promise<Components> {
   return sortBy(components, c => c.name);
 }
 
-function getCommonDirFromPaths(paths: Map<*, string>) {
+function getCommonDirFromPaths(paths: Array<string>) {
   // Common dir isn't going to be used if we don't know of any component path
-  return paths.size > 0 ? commondir(Array.from(paths.values())) : '';
+  return paths.length > 0 ? commondir(paths) : '';
 }
 
 function getFileNamespace(commonDir, filePath) {
