@@ -14,7 +14,7 @@ function getComponentByName(components, compName) {
   return comp;
 }
 
-describe('Component namespace', () => {
+describe('Auto component namespace', () => {
   let components;
 
   beforeEach(async () => {

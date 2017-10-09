@@ -12,16 +12,19 @@ describe('Component paths', () => {
     });
   });
 
-  it('detects path for components with own file', () => {
+  it('detects path for external component', () => {
     expect(components[0].filePath).toBe(
       require.resolve('./fileMocks/componentPaths/Bold')
     );
+  });
+
+  it('detects path for external component', () => {
     expect(components[2].filePath).toBe(
       require.resolve('./fileMocks/componentPaths/Italics')
     );
   });
 
-  it('sets null path for components without own file', () => {
+  it('sets null path for inlined component', () => {
     expect(components[1].filePath).toBe(null);
   });
 });

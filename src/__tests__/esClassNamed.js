@@ -4,17 +4,13 @@ import path from 'path';
 import { getComponents } from '../getComponents';
 import Bold from './fileMocks/esClassNamed/Bold';
 
-describe('ES class named', () => {
+describe('Named ES Class', () => {
   let components;
 
   beforeEach(async () => {
     components = await getComponents({
       cwd: path.join(__dirname, 'fileMocks/esClassNamed')
     });
-  });
-
-  it('finds one component', () => {
-    expect(components).toHaveLength(1);
   });
 
   it('infers component name', () => {

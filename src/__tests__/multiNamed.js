@@ -5,17 +5,13 @@ import { getComponents } from '../getComponents';
 import Italics from './fileMocks/multiNamed/Italics';
 import Bold from './fileMocks/multiNamed/Bold';
 
-describe('Multi named', () => {
+describe('Named multi fixture file', () => {
   let components;
 
   beforeEach(async () => {
     components = await getComponents({
       cwd: path.join(__dirname, 'fileMocks/multiNamed')
     });
-  });
-
-  it('finds two component', () => {
-    expect(components).toHaveLength(2);
   });
 
   describe('Bold fixtures', () => {
@@ -25,27 +21,27 @@ describe('Multi named', () => {
       fixtures = components[0].fixtures;
     });
 
-    it('are two', () => {
-      expect(fixtures).toHaveLength(2);
+    it('has custom name', () => {
+      expect(fixtures[0].name).toBe('A fix');
     });
 
-    it('have default names', () => {
-      // Sorted by name
-      expect(fixtures[0].name).toBe('A fix');
+    it('has custom name', () => {
       expect(fixtures[1].name).toBe('S fix');
     });
 
-    it('have multi file paths', () => {
+    it('has multi file path', () => {
       expect(fixtures[0].filePath).toBe(
         require.resolve('./fileMocks/multiNamed/fixtures')
       );
+    });
+
+    it('has multi file path', () => {
       expect(fixtures[1].filePath).toBe(
         require.resolve('./fileMocks/multiNamed/fixtures')
       );
     });
 
-    it('have sources', () => {
-      // Sorted by name
+    it('has source', () => {
       expect(fixtures[0].source).toEqual({
         name: 'A fix',
         component: Bold,
@@ -53,6 +49,9 @@ describe('Multi named', () => {
           name: 'Alina'
         }
       });
+    });
+
+    it('has source', () => {
       expect(fixtures[1].source).toEqual({
         name: 'S fix',
         component: Bold,
@@ -70,11 +69,7 @@ describe('Multi named', () => {
       fixtures = components[1].fixtures;
     });
 
-    it('is one', () => {
-      expect(fixtures).toHaveLength(1);
-    });
-
-    it('has default name', () => {
+    it('has custom name', () => {
       expect(fixtures[0].name).toBe('J fix');
     });
 

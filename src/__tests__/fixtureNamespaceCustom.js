@@ -14,7 +14,7 @@ function getFixtureByName(fixtures, fixtureName) {
   return fixture;
 }
 
-describe('Fixture custom namespace', () => {
+describe('Custom namespaced fixtures', () => {
   let components;
   let fixtures;
 

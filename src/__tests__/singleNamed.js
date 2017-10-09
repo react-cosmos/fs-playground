@@ -4,7 +4,7 @@ import path from 'path';
 import { getComponents } from '../getComponents';
 import Italics from './fileMocks/singleNamed/Italics';
 
-describe('Single named', () => {
+describe('Named single fixture file', () => {
   let components;
 
   beforeEach(async () => {
@@ -13,15 +13,7 @@ describe('Single named', () => {
     });
   });
 
-  it('finds one component', () => {
-    expect(components).toHaveLength(1);
-  });
-
-  it('finds one fixture', () => {
-    expect(components[0].fixtures).toHaveLength(1);
-  });
-
-  it('has default fixture name', () => {
+  it('has custom fixture name', () => {
     expect(components[0].fixtures[0].name).toBe('foo fixture');
   });
 
