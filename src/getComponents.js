@@ -64,6 +64,8 @@ export async function getComponents(args: Args): Promise<Components> {
       const fixture = fixturesInFile[j];
       const { component, name } = fixture;
 
+      // TODO: Throw if fixture.component is missing
+
       // Check user specified namespace first, fallback to namespacing based
       // on file path
       const namespace = fixture.namespace || fileNamespace;
