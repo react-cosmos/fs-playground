@@ -53,7 +53,7 @@ export async function getComponents(args: Args): Promise<Components> {
   for (let i = 0; i < fixturePaths.length; i++) {
     const fixturePath = fixturePaths[i];
     const source = importModule(require(fixturePath));
-    const namespace = getFileNamespace(fixtureCommonDir, fixturePath);
+    const fileNamespace = getFileNamespace(fixtureCommonDir, fixturePath);
 
     // Fixture files can export one fixture object or a list of fixture object
     const isMultiFixture = Array.isArray(source);
@@ -63,6 +63,10 @@ export async function getComponents(args: Args): Promise<Components> {
     for (let j = 0; j < fixturesInFile.length; j++) {
       const fixture = fixturesInFile[j];
       const { component, name } = fixture;
+
+      // Check user specified namespace first, fallback to namespacing based
+      // on file path
+      const namespace = fixture.namespace || fileNamespace;
 
       // Is this the first fixture for this component?
       let compFixtures = fixturesByComponent.get(component);
