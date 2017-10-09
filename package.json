@@ -16,7 +16,6 @@
     "pretty-format": "^21.2.1"
   },
   "dependencies": {
-    "babel-traverse": "^6.26.0",
     "babylon": "^6.18.0",
     "glob": "^7.1.2",
     "lodash": "^4.17.4",

@@ -4,7 +4,6 @@ import fs from 'fs';
 import path from 'path';
 import promisify from 'util.promisify';
 import * as babylon from 'babylon';
-import traverse from 'babel-traverse';
 
 const readFileAsync = promisify(fs.readFile);
 
@@ -44,70 +43,76 @@ export async function getComponentInfoFromFixture(args: Args): Promise<Output> {
     plugins: ['jsx']
   });
 
-  return new Promise(resolve => {
-    traverse(ast, {
-      ExportDefaultDeclaration(exportPath) {
-        // Get a list of all imports to query them later
-        const imports = exportPath.parent.body.filter(
-          n => n.type === 'ImportDeclaration'
-        );
-        const exportBody = exportPath.node.declaration;
+  try {
+    const { body } = ast.program;
 
-        // Support for single and multi fixture files
-        let fixtureObject;
-        if (exportBody.type === 'ArrayExpression') {
-          fixtureObject = exportBody.elements[fixtureIndex];
-        } else if (exportBody.type === 'ObjectExpression') {
-          fixtureObject = exportBody;
-        }
+    // Get a list of all imports to query them later
+    const imports = body.filter(isTyper('ImportDeclaration'));
+    const defaultExportNode = body.find(isTyper('ExportDefaultDeclaration'));
 
-        if (!fixtureObject) {
-          // Could not understand fixture contents so we report that we were
-          // unsuccessful in detecting the component path
-          resolve({
-            componentName: null,
-            componentPath: null
-          });
-        } else {
-          const componentProperty = fixtureObject.properties.find(
-            prop => prop.key.name === 'component'
+    if (!defaultExportNode) {
+      throw Error('Could not find default export in fixture file');
+    }
+
+    const exportBody = defaultExportNode.declaration;
+    let fixtureNode;
+
+    // Support for single and multi fixture files
+    if (isType(exportBody, 'ArrayExpression')) {
+      fixtureNode = exportBody.elements[fixtureIndex];
+    } else if (isType(exportBody, 'ObjectExpression')) {
+      fixtureNode = exportBody;
+    }
+
+    if (!fixtureNode) {
+      // Could not understand fixture contents so we report that we were
+      // unsuccessful in detecting the component path
+      throw Error('Could not parse fixture export');
+    } else {
+      const componentProperty = fixtureNode.properties.find(
+        prop => prop.key.name === 'component'
+      );
+      const componentName = componentProperty.value.name;
+
+      // From this point we'll return the component name even if we fail to
+      // detect the component file path
+      try {
+        const componentPath = getImportPathByName(imports, componentName);
+        if (!componentPath) {
+          throw Error(
+            'Could not find corresponding component import. ' +
+              'Maybe the component is declared inside the fixture?'
           );
-
-          // TODO: Warn and return if component property wasn't found on fixture
-          const componentName = componentProperty.value.name;
-          const componentPath = getImportPathByName(imports, componentName);
-
-          if (!componentPath) {
-            // Seems like there's no import corresponding to fixture.component.
-            // Maybe the component is declared inside the fixture.
-            resolve({
-              componentName,
-              componentPath: null
-            });
-          } else {
-            // TODO: What if path isn't relative?
-            const componentAbsPath = path.join(
-              path.dirname(fixturePath),
-              componentPath
-            );
-
-            try {
-              const componentResolvedPath = require.resolve(componentAbsPath);
-              resolve({
-                componentName,
-                componentPath: componentResolvedPath
-              });
-            } catch (e) {
-              resolve({
-                componentName,
-                componentPath: null
-              });
-            }
-          }
         }
+
+        // TODO: What if path isn't relative?
+        const componentAbsPath = path.join(
+          path.dirname(fixturePath),
+          componentPath
+        );
+        const componentResolvedPath = require.resolve(componentAbsPath);
+
+        return {
+          componentName,
+          componentPath: componentResolvedPath
+        };
+      } catch (e) {
+        // TODO: Allow user to see these errors when debugging
+        // console.log(e.message);
+        return {
+          componentName,
+          componentPath: null
+        };
       }
-    });
-  });
+    }
+  } catch (e) {
+    // TODO: Allow user to see these errors when debugging
+    // console.log(e.message);
+    return {
+      componentName: null,
+      componentPath: null
+    };
+  }
 }
 
 function getImportPathByName(imports, componentName: string): string | null {
@@ -117,4 +122,12 @@ function getImportPathByName(imports, componentName: string): string | null {
   );
 
   return relevantImport ? relevantImport.source.value : null;
+}
+
+function isTyper(nodeType) {
+  return node => isType(node, nodeType);
+}
+
+function isType(node, nodeType) {
+  return node.type === nodeType;
 }
