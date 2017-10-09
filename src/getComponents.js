@@ -141,7 +141,6 @@ export async function getComponents(args: Args): Promise<Components> {
 }
 
 function getCommonDirFromPaths(paths: Array<string>) {
-  // Common dir isn't going to be used if we don't know of any component path
   return paths.length > 0 ? commondir(paths) : '';
 }
 
