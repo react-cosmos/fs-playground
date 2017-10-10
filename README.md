@@ -1,7 +1,7 @@
 # fs-playground
 Playground for experimenting with a new fs API
 
-See [src/__tests__](src/__tests__) for use cases and [utils/getComponents.js](utils/getComponents.js) for implementation.
+See [src/\__tests\__](src/__tests__) for use cases and [src/getComponents.js](src/getComponents.js) for implementation.
 
 ## Input
 
