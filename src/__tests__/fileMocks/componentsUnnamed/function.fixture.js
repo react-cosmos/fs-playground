@@ -1,4 +1,6 @@
-import UnnamedFunction from '../components/UnnamedFunction';
+// @flow
+
+import UnnamedFunction from './components/UnnamedFunction';
 
 export default {
   name: 'function fixture',

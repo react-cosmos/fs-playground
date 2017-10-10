@@ -2,9 +2,9 @@
 
 import path from 'path';
 import { getComponents } from '../getComponents';
-import Italics from './fileMocks/components/Italics';
+import Italics from './fileMocks/singlesUnnamed/Italics';
 
-describe('Singles unnamed', () => {
+describe('More unnamed single fixture files', () => {
   let components;
 
   beforeEach(async () => {
@@ -13,42 +13,11 @@ describe('Singles unnamed', () => {
     });
   });
 
-  it('finds one component', () => {
-    expect(components).toHaveLength(1);
-  });
-
-  it('finds two fixtures', () => {
-    expect(components[0].fixtures).toHaveLength(2);
-  });
-
-  it('have default fixture names', () => {
+  it('has "default" name', () => {
     expect(components[0].fixtures[0].name).toBe('default');
+  });
+
+  it('has "default (1)" name', () => {
     expect(components[0].fixtures[1].name).toBe('default (1)');
-  });
-
-  it('have fixture paths', () => {
-    // Warning: Order depends on node-glob
-    expect(components[0].fixtures[0].filePath).toBe(
-      require.resolve('./fileMocks/singlesUnnamed/clone.fixture')
-    );
-    expect(components[0].fixtures[1].filePath).toBe(
-      require.resolve('./fileMocks/singlesUnnamed/fixture')
-    );
-  });
-
-  it('have fixture sources', () => {
-    // Warning: Order depends on node-glob
-    expect(components[0].fixtures[0].source).toEqual({
-      component: Italics,
-      props: {
-        name: 'Johnny'
-      }
-    });
-    expect(components[0].fixtures[1].source).toEqual({
-      component: Italics,
-      props: {
-        name: 'John'
-      }
-    });
   });
 });

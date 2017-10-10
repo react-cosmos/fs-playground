@@ -16,6 +16,8 @@
     "pretty-format": "^21.2.1"
   },
   "dependencies": {
+    "babylon": "^6.18.0",
+    "commondir": "^1.0.1",
     "glob": "^7.1.2",
     "lodash": "^4.17.4",
     "micromatch": "^3.1.0",

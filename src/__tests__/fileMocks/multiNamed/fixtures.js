@@ -1,12 +1,14 @@
-import Italics from '../components/Italics';
-import Bold from '../components/Bold';
+// @flow
+
+import Italics from './Italics';
+import Bold from './Bold';
 
 export default [
   {
-    name: 'J fix',
-    component: Italics,
+    name: 'A fix',
+    component: Bold,
     props: {
-      name: 'John'
+      name: 'Alina'
     }
   },
   {
@@ -17,10 +19,10 @@ export default [
     }
   },
   {
-    name: 'A fix',
-    component: Bold,
+    name: 'J fix',
+    component: Italics,
     props: {
-      name: 'Alina'
+      name: 'John'
     }
   }
 ];

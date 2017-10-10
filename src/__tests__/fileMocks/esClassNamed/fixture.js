@@ -1,4 +1,6 @@
-import Bold from '../components/Bold';
+// @flow
+
+import Bold from './Bold';
 
 export default {
   component: Bold,

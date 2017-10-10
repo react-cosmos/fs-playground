@@ -2,7 +2,7 @@
 
 import type { ComponentType } from 'react';
 
-const disallowedNames = ['_class'];
+const disallowedNames = ['_class', 'component'];
 
 function filterName(name: ?string): ?string {
   return name && disallowedNames.indexOf(name) === -1 ? name : null;

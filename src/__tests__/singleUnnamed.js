@@ -2,9 +2,9 @@
 
 import path from 'path';
 import { getComponents } from '../getComponents';
-import Italics from './fileMocks/components/Italics';
+import Italics from './fileMocks/singleUnnamed/Italics';
 
-describe('Single unnamed', () => {
+describe('Unnamed single fixture file', () => {
   let components;
 
   beforeEach(async () => {
@@ -13,15 +13,7 @@ describe('Single unnamed', () => {
     });
   });
 
-  it('finds one component', () => {
-    expect(components).toHaveLength(1);
-  });
-
-  it('finds one fixture', () => {
-    expect(components[0].fixtures).toHaveLength(1);
-  });
-
-  it('has default fixture name', () => {
+  it('has "default" fixture name', () => {
     expect(components[0].fixtures[0].name).toBe('default');
   });
 
