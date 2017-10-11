@@ -1,4 +1,6 @@
 {
+  "name": "cosmos-fs-playground",
+  "version": "0.0.1-1",
   "scripts": {
     "lint": "flow",
     "test": "jest --config jest.config.js",
