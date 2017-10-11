@@ -41,22 +41,12 @@ describe('Unnamed multi fixture file', () => {
       );
     });
 
-    it('has source', () => {
-      expect(fixtures[0].source).toEqual({
-        component: Bold,
-        props: {
-          name: 'Alina'
-        }
-      });
+    it('has fixtureIndex 0', () => {
+      expect(fixtures[0].fixtureIndex).toBe(0);
     });
 
-    it('has source', () => {
-      expect(fixtures[1].source).toEqual({
-        component: Bold,
-        props: {
-          name: 'Sarah'
-        }
-      });
+    it('has fixtureIndex 1', () => {
+      expect(fixtures[1].fixtureIndex).toBe(1);
     });
   });
 
@@ -77,13 +67,8 @@ describe('Unnamed multi fixture file', () => {
       );
     });
 
-    it('has source', () => {
-      expect(fixtures[0].source).toEqual({
-        component: Italics,
-        props: {
-          name: 'John'
-        }
-      });
+    it('has fixtureIndex 2', () => {
+      expect(fixtures[0].fixtureIndex).toBe(2);
     });
   });
 });

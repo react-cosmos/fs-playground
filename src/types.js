@@ -3,10 +3,10 @@
 import type { ComponentType } from 'react';
 
 export type Fixture = {
-  name: string,
-  namespace: string,
   filePath: string,
-  source: Object
+  fixtureIndex: number | null,
+  name: string,
+  namespace: string
 };
 
 export type Fixtures = Array<Fixture>;
@@ -14,9 +14,9 @@ export type Fixtures = Array<Fixture>;
 export type FixturesByComponent = Map<ComponentType<*>, Fixtures>;
 
 export type Component = {
+  filePath: string | null,
   name: string,
   namespace: string,
-  filePath: string | null,
   type: ComponentType<*>,
   fixtures: Fixtures
 };

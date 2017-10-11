@@ -62,6 +62,7 @@ export async function getComponents(args: Args): Promise<Components> {
     // Can't use forEach because we want each (async) loop to be serial
     for (let j = 0; j < fixturesInFile.length; j++) {
       const fixture = fixturesInFile[j];
+      const fixtureIndex = isMultiFixture ? j : null;
       const { component, name } = fixture;
 
       // TODO: Throw if fixture.component is missing
@@ -79,9 +80,9 @@ export async function getComponents(args: Args): Promise<Components> {
 
       compFixtures.push({
         filePath: fixturePath,
+        fixtureIndex,
         name: name || defaultFixtureNamer(component),
-        namespace,
-        source: fixture
+        namespace
       });
 
       if (!componentPaths.get(component)) {
@@ -90,7 +91,7 @@ export async function getComponents(args: Args): Promise<Components> {
           componentPath
         } = await getComponentInfoFromFixture({
           fixturePath,
-          fixtureIndex: isMultiFixture ? j : null
+          fixtureIndex
         });
 
         // It's possible to identify the component name but not the file path
