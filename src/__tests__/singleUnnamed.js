@@ -23,12 +23,7 @@ describe('Unnamed single fixture file', () => {
     );
   });
 
-  it('has fixture source', () => {
-    expect(components[0].fixtures[0].source).toEqual({
-      component: Italics,
-      props: {
-        name: 'John'
-      }
-    });
+  it('has null fixtureIndex', () => {
+    expect(components[0].fixtures[0].fixtureIndex).toBe(null);
   });
 });
