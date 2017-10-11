@@ -1,3 +1,5 @@
+> **Development moved to [skidding/react-cosmos/tree/new-fs/packages/react-cosmos-voyager2](https://github.com/skidding/react-cosmos/tree/new-fs/packages/react-cosmos-voyager2)**
+
 # fs-playground
 Playground for experimenting with a new fs API
 
